@@ -1,3 +1,5 @@
+[![Version](https://img.shields.io/crates/v/serialmessage.svg)](https://crates.io/crates/serialmessage)
+
 # serialmessage
 
 `serialmessage` enables you to pack serial data into a fast, reliable,
