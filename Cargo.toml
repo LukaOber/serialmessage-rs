@@ -1,0 +1,19 @@
+[package]
+name = "serialmessage"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Pack serial data into a fast, reliable, and packetized form for communicating with e.g. a Microcontroller."
+keywords = ["serial", "microcontroller", "packets"]
+categories = ["no-std", "embedded", "encoding"]
+
+[dependencies]
+cfg-if = "1.0.0"
+
+[dev-dependencies]
+zerocopy = "0.6.1"
+serialport = "4.2.0"
+
+[features]
+default = ["alloc"]
+alloc = []
