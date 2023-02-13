@@ -290,7 +290,7 @@ impl SerMsg {
         let mut overhead_byte = 0xFF;
         for (f_ind, val) in (0_u8..).zip(data_slice.iter()) {
             if *val == SerMsg::START_BYTE {
-                overhead_byte = f_ind as u8;
+                overhead_byte = f_ind;
                 break;
             }
         }
