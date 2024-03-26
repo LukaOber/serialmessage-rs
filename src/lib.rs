@@ -270,14 +270,15 @@ impl SerMsg {
             }
             while self.rcvd_data[self.cobs_byte as usize] > 0 {
                 let delta: u8 = self.rcvd_data[self.cobs_byte as usize];
-                if (delta + self.cobs_byte) > self.payload_len {
+
+                // check if delta make us point outside payload region
+                // saturating_add max out at 255. And it works, because:
+                // self.payload_len<=SerMsg::MAX_PACKET_SIZE<255
+                if (delta.saturating_add(self.cobs_byte)) >= self.payload_len {
                     return false;
                 }
                 self.rcvd_data[self.cobs_byte as usize] = SerMsg::START_BYTE;
                 self.cobs_byte += delta;
-                if self.cobs_byte >= self.payload_len {
-                    return false;
-                }
             }
             self.rcvd_data[self.cobs_byte as usize] = SerMsg::START_BYTE;
             true

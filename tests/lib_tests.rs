@@ -354,6 +354,14 @@ mod error_tests {
             }
         }
     }
+    #[test]
+    fn test_cobs_overflow() {
+        let v = [
+            126, 1, 7, 10, 62, 144, 168, 18, 47, 0, 35, 253, 239, 188, 13, 129,
+        ];
+        let mut m = SerMsg::new();
+        m.parse_read_bytes(&v);
+    }
 
     #[test]
     fn exceeded_max_length() {
