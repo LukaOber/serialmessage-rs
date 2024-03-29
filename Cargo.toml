@@ -6,7 +6,7 @@ license = "MIT"
 repository = "https://github.com/LukaOber/serialmessage-rs"
 documentation = "https://docs.rs/serialmessage/"
 description = "Pack serial data into a fast, reliable, and packetized form for communicating with e.g. a Microcontroller."
-keywords = ["serial", "microcontroller", "packets"]
+keywords = ["serial", "microcontroller", "packets", "no_std"]
 categories = ["no-std", "embedded", "encoding"]
 
 [dependencies]
