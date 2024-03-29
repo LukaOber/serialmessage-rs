@@ -271,9 +271,10 @@ impl SerMsg {
             while self.rcvd_data[self.cobs_byte as usize] > 0 {
                 let delta: u8 = self.rcvd_data[self.cobs_byte as usize];
 
-                // check if delta make us point outside payload region
-                // saturating_add max out at 255. And it works, because:
-                // self.payload_len<=SerMsg::MAX_PACKET_SIZE<255
+                // check if delta makes us point outside of the payload region
+                // this means the data was corrupted or malformed in a lot of places
+                // and by chance got past the CRC
+                // the saturating add avoids a panic where an overflow might have occured
                 if (delta.saturating_add(self.cobs_byte)) >= self.payload_len {
                     return false;
                 }
@@ -408,7 +409,7 @@ cfg_if::cfg_if! {
                 let mut data_vec: Vec<u8> = Vec::with_capacity(data.len() + 6);
                 data_vec.push(SerMsg::START_BYTE);
                 data_vec.push(id);
-                data_vec.push(0); // 0 as a placeholder for the CRC
+                data_vec.push(0); // 0 as a placeholder for the COBS
                 data_vec.push(data.len() as u8);
                 data_vec.extend(data);
                 data_vec[2] = SerMsg::pack_cobs(&mut data_vec[4..4 + data.len()]);
